@@ -61,7 +61,7 @@ win = visual.Window(
 design_filename = os.path.join(script_dir, "input_files/UNW01_stg1_certain.csv")
 my_design = np.genfromtxt(design_filename, delimiter=',', names = True)
 
-#print(my_design)
+print(my_design)
 #print(my_design['cue1'][:])
 
 cue_files_list = glob.glob('img_files\Cue_*.jpg')
