@@ -4,19 +4,49 @@ import numpy as np
 import glob
 import csv
 import os
+import datetime
 import random
 import tobii_research as tr
-
 from pathlib import Path
+
+# Unique experiment code
+exp_code = "UNW01"
+
+# get current date and time as string
+x = datetime.datetime.now()
+start_time = x.strftime("%y_%m_%d_%H%M")
 
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 
-f = open('csvfile.csv','w')
-f.write('new file\n')
-f.close()
+# GUI for experiment setup and subject details
+setupGUI = gui.Dlg(title= exp_code + " Experiment")
+setupGUI.addText('Experiment Setup')
+setupGUI.addField('Participant Number:', 999) # remove default of 999
+setupGUI.addText(' ')  # blank line
+setupGUI.addText('Participant details')
+setupGUI.addField('Age:')
+setupGUI.addField('Gender', choices=["Male", "Female", "Non-binary", "NA", "Other"])
+language = setupGUI.addField('English first language?', choices=["Yes", "No"])
+setup_data = setupGUI.show()  # show dialog and wait for OK or Cancel
+if setupGUI.OK:  # or if ok_data is not None
+    subNum = int(setup_data[0])
+    print(type(subNum))
+    dataFile = "DATA\ " + start_time + "_s" + f"{subNum:03}" + ".csv"
+    if os.path.exists(dataFile):
+        # file exists
+        print('That file already exists')
+        core.quit()
+else:
+    print('Setup cancelled')
+    core.quit()
+
+dataHeader = ['pNum', 'start_time', 'cue1', 'cue2',
+              'outcome', 'certainty', 'accuracy', 'RT']
+with open(dataFile, 'w', newline='') as f:
+    wr = csv.writer(f)
+    wr.writerow(dataHeader)
 
 runET = 0
-writeHeader = True
 
 TS = 0 # variable for PP timestamps 
 t_phase = 0 # variable for trial phase information
@@ -25,6 +55,8 @@ t_phase = 0 # variable for trial phase information
 
 if runET == 1:
     # connect to eye=tracker
+    writeHeader = True
+
     found_eyetrackers = tr.find_all_eyetrackers()
 
     my_eyetracker = found_eyetrackers[0]
@@ -63,15 +95,27 @@ win = visual.Window(
 textFeedback = visual.TextStim(win=win, units="pix", pos=[0, -200], color=[-1,-1,-1],
                                font="Arial", height = 20, bold=True)
 
-# read in input files
-design_filename = os.path.join(script_dir, "input_files/UNW01_stg1_certain.csv")
-my_design = np.genfromtxt(design_filename, delimiter=',', names = True, dtype = int)
+# read in input files and generate trial sequence
 
-stg1_blocks = 3
+# function for generating trial sequence
+def genTrialSeq(design_filename, blocks):
+    # read in input files
+    stg_design = np.genfromtxt(design_filename, delimiter=',', skip_header = True, dtype = int)
+    stg_trials = []
 
+    for b in range(0,blocks):
+        newPerm = np.random.permutation(len(stg_design)) # shuffles rows
+        stg_trials.append(stg_design[newPerm])
 
+    stg_trials = np.reshape(stg_trials, (-1, 4)) # -1 here signals the missing dimensions, which is auto computed
 
+    return stg_trials
 
+stg1 = genTrialSeq(os.path.join(script_dir, "input_files/UNW01_stg1_certain.csv"), 2)
+
+trialSeq = stg1
+
+# read in image files and create image array
 cue_files_list = glob.glob('img_files\Cue_*.jpg')
 imgArray = [visual.ImageStim(win, img, size = 300) for img in cue_files_list] # create array of images
 imgArray.insert(0,[]) # blank element to ensure images start at index 1
@@ -80,12 +124,14 @@ imgArray.insert(0,[]) # blank element to ensure images start at index 1
 if runET == 1: 
     my_eyetracker.subscribe_to(tr.EYETRACKER_GAZE_DATA, gaze_data_callback, as_dictionary=True)
 
-for trial in range(0,4):
+for trial in trialSeq[0:4,]:
 
-    cue1 = imgArray[my_design['cue1'][trial]]
+    # "trial" is the row from trialSeq, containing info on cues/outcomes etc
+
+    cue1 = imgArray[trial[0]]
     cue1.pos = [-300,0]
     cue1.draw()
-    cue2 = imgArray[my_design['cue2'][trial]]
+    cue2 = imgArray[trial[1]]
     cue2.pos = [300,0]
     cue2.draw()
 
@@ -100,10 +146,10 @@ for trial in range(0,4):
     acc = 0 # default
 
     if len(keys) == 1: # check only 1 response
-        if keys[0][0] == 'up' and my_design['out'][trial] == 1:
+        if keys[0][0] == 'up' and trial[2] == 1:
             feedback = "Correct!"
             acc = 1
-        elif keys[0][0] == 'down' and my_design['out'][trial] == 2:
+        elif keys[0][0] == 'down' and trial[2] == 2:
             feedback = "Correct!"
             acc = 1
         else:
@@ -121,6 +167,16 @@ for trial in range(0,4):
     TS = win.flip()
     t_phase = 3 # feedback off, start of ITI phase
     core.wait(1)
+
+    # write details to csv
+    trial_data = np.append(trial, [acc, RT])
+    trial_data = np.array2string(trial_data)
+    print(trial_data)
+    trial_data = np.insert(trial_data, 0, [str(subNum), exp_code, str(start_time)])
+
+    with open(dataFile, 'a', newline='') as f:
+        wr = csv.writer(f)
+        wr.writerow(trial_data)
 
 # turn eye-tracker off
 if runET == 1: 
