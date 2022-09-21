@@ -9,8 +9,12 @@ import random
 import tobii_research as tr
 from pathlib import Path
 
-# Unique experiment code
-exp_code = "UNW01"
+random.seed() # use clock for random seed
+
+# Experiment parameters
+exp_code = "UNW01" # Unique experiment code
+runET = 0
+timeout_time = 10
 
 # get current date and time as string
 x = datetime.datetime.now()
@@ -21,7 +25,7 @@ script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 # GUI for experiment setup and subject details
 setupGUI = gui.Dlg(title= exp_code + " Experiment")
 setupGUI.addText('Experiment Setup')
-setupGUI.addField('Participant Number:', 999) # remove default of 999
+setupGUI.addField('Participant Number:', random.randint(1, 999)) # remove random for experiment
 setupGUI.addText(' ')  # blank line
 setupGUI.addText('Participant details')
 setupGUI.addField('Age:')
@@ -31,24 +35,18 @@ setup_data = setupGUI.show()  # show dialog and wait for OK or Cancel
 if setupGUI.OK:  # or if ok_data is not None
     subNum = int(setup_data[0])
     print(type(subNum))
-    dataFile = "DATA\ " + start_time + "_s" + f"{subNum:03}" + ".csv"
-    if os.path.exists(dataFile):
-        # file exists
-        print('That file already exists')
-        core.quit()
+    dataFile = "DATA\ " + exp_code + "_" + start_time + "_s" + f"{subNum:03}" + ".csv" # create csv data file
 else:
     print('Setup cancelled')
     core.quit()
 
-dataHeader = ['pNum', 'start_time', 'cue1', 'cue2',
+dataHeader = ['exp_code', 'pNum', 'cue1', 'cue2',
               'outcome', 'certainty', 'accuracy', 'RT']
 with open(dataFile, 'w', newline='') as f:
     wr = csv.writer(f)
     wr.writerow(dataHeader)
 
-runET = 0
-
-TS = 0 # variable for PP timestamps 
+TS = 0 # variable for PP timestamps
 t_phase = 0 # variable for trial phase information
 
 #mouse = Mouse(visible=True)
@@ -64,7 +62,7 @@ if runET == 1:
     print("Model: " + my_eyetracker.model)
     print("Name (It's OK if this is empty): " + my_eyetracker.device_name)
     print("Serial number: " + my_eyetracker.serial_number)
-    print("NEW")  
+    print("NEW")
 
     def gaze_data_callback(gaze_data):
         # Print gaze points of left and right eye
@@ -72,13 +70,13 @@ if runET == 1:
 #            gaze_left_eye=gaze_data['left_gaze_point_on_display_area'],
 #            gaze_right_eye=gaze_data['right_gaze_point_on_display_area']))
         with open('csvfile.csv', 'a', newline = '') as f:  # You will need 'wb' mode in Python 2.x
-            
+
             global writeHeader, trial, t_phase, TS
-            
+
             gaze_data["trial"] = trial
             gaze_data["trial_phase"] = t_phase
             gaze_data["pp_TS"] = TS
-            
+
             w = csv.DictWriter(f, gaze_data.keys())
             if writeHeader == True:
                 w.writeheader()
@@ -115,13 +113,26 @@ stg1 = genTrialSeq(os.path.join(script_dir, "input_files/UNW01_stg1_certain.csv"
 
 trialSeq = stg1
 
-# read in image files and create image array
+# read in image files and create image array for cues
 cue_files_list = glob.glob('img_files\Cue_*.jpg')
 imgArray = [visual.ImageStim(win, img, size = 300) for img in cue_files_list] # create array of images
 imgArray.insert(0,[]) # blank element to ensure images start at index 1
 
+# read in instruction slides
+instr_files_list = glob.glob('instruction_files\Slide*.PNG')
+instrArray = [visual.ImageStim(win, img, size=(winWidth, winHeight)) for img in instr_files_list] # create array of images
+timeout_img = instrArray[2] # image for timeout screen
+rest_break_img = instrArray[3] # image for rest break screen (not implemented in this task)
+debrief_img = instrArray[4] # image for debrief screen
+
+# present the instructions
+for instr in range(0, 2):
+    instrArray[instr].draw()
+    win.flip()
+    event.waitKeys(keyList=["space"]) # wait for spacebar response
+
 # turn eye-tracker on
-if runET == 1: 
+if runET == 1:
     my_eyetracker.subscribe_to(tr.EYETRACKER_GAZE_DATA, gaze_data_callback, as_dictionary=True)
 
 for trial in trialSeq[0:4,]:
@@ -139,29 +150,37 @@ for trial in trialSeq[0:4,]:
     TS = win.flip()
     t_phase = 1 # start of the "stimulus on" phase
 
-    keys = event.waitKeys(keyList=["up", "down"], timeStamped=TS) # wait for response
+    keys = event.waitKeys(keyList=["up", "down"], timeStamped=TS, maxWait=timeout_time) # wait for response
     print(keys)
 
-    RT = keys[0][1]
     acc = 0 # default
-
-    if len(keys) == 1: # check only 1 response
-        if keys[0][0] == 'up' and trial[2] == 1:
-            feedback = "Correct!"
-            acc = 1
-        elif keys[0][0] == 'down' and trial[2] == 2:
-            feedback = "Correct!"
-            acc = 1
-        else:
-            feedback = "Error!"
+    if keys == None:
+        timeout_img.draw()
+        win.flip()
+        core.wait(2)
+        acc = -99
+        RT = -99  # this signals a timeout
     else:
-        feedback = "Error!"
+        if len(keys) == 1:  # check there is only 1 response key pressed
+            RT = keys[0][1]
+            if keys[0][0] == 'up' and trial[2] == 1:
+                feedback = "Correct!"
+                acc = 1
+            elif keys[0][0] == 'down' and trial[2] == 2:
+                feedback = "Correct!"
+                acc = 1
+            else:
+                feedback = "Error!"
+        else:  # detected there were multiple keys pressed
+            feedback = "Error!"
+            RT = -99
 
-    textFeedback.text = feedback
-    textFeedback.draw()
-    TS = win.flip()
-    t_phase = 2 # feedback on phase
-    core.wait(.5)
+        # write feedback text to screen
+        textFeedback.text = feedback
+        textFeedback.draw()
+        TS = win.flip()
+        t_phase = 2 # feedback on phase
+        core.wait(.5)
 
     # ITI
     TS = win.flip()
@@ -172,16 +191,18 @@ for trial in trialSeq[0:4,]:
     trial_data = np.append(trial, [acc, RT])
     trial_data = np.array2string(trial_data)
     print(trial_data)
-    trial_data = np.insert(trial_data, 0, [str(subNum), exp_code, str(start_time)])
+    trial_data = np.insert(trial_data, 0, [exp_code, str(subNum), str(start_time)])
 
     with open(dataFile, 'a', newline='') as f:
         wr = csv.writer(f)
         wr.writerow(trial_data)
 
 # turn eye-tracker off
-if runET == 1: 
+if runET == 1:
     my_eyetracker.unsubscribe_from(tr.EYETRACKER_GAZE_DATA, gaze_data_callback)
 
-
+debrief_img.draw()
+win.flip()
+event.waitKeys(keyList=["space"]) # wait for spacebar response
 
 win.close()

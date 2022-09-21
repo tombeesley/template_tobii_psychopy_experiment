@@ -1,43 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="7129e76d-5d42-4222-9da1-2ee0fbb370ad" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/UNW01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UNW01.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/ 22_09_16_1439_s999.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/ 22_09_16_1441_s999.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/ 22_09_16_1443_s999.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/ 22_09_16_1445_s999.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/UNW01_exp.py" beforeDir="false" afterPath="$PROJECT_DIR$/UNW01_exp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_trials.py" beforeDir="false" afterPath="$PROJECT_DIR$/generate_trials.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/UNW01_exp.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="554">
-              <caret line="176" column="46" lean-forward="true" selection-start-line="176" selection-start-column="46" selection-end-line="176" selection-end-column="46" />
-              <folding>
-                <element signature="e#0#51#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/generate_trials.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -52,16 +32,20 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/UNW01_exp.py" />
         <option value="$PROJECT_DIR$/generate_trials.py" />
+        <option value="$PROJECT_DIR$/UNW01_exp.py" />
       </list>
     </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="1631" />
     <option name="height" value="1407" />
   </component>
+  <component name="ProjectId" id="2F4glxSkMTLRWYsVFkNhcNq6II8" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -85,22 +69,23 @@
       <pane id="Scope" />
     </panes>
   </component>
-  <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "last_opened_file_path": "C:/Repos/Research/UNW01"
+  }
+}]]></component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings>
+        <option name="useSoftWraps" value="true" />
+      </console-settings>
     </option>
   </component>
-  <component name="RunManager" selected="Python.generate_trials">
+  <component name="RunManager" selected="Python.UNW01_exp">
     <configuration name="UNW01_exp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="UNW01" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -145,11 +130,12 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.generate_trials" />
         <item itemvalue="Python.UNW01_exp" />
+        <item itemvalue="Python.generate_trials" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -174,28 +160,38 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1645469" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16693164" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6577901" weight="0.32969603" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6565978" weight="0.32969603" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.4990452" weight="0.32967034" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49968174" weight="0.32967034" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49968174" weight="0.32967034" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.34220985" side_tool="true" visible="true" weight="0.32969603" />
-      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.53219396" weight="0.26344505" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="6" sideWeight="0.5302067" visible="true" weight="0.26344505" />
+      <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.4990452" weight="0.32967034" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49968174" weight="0.32967034" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49968174" weight="0.32967034" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.46979332" side_tool="true" visible="true" weight="0.26344505" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="R Graphics" order="3" />
       <window_info anchor="right" id="R Packages" order="4" />
     </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/third_party/thriftpy/_shaded_thriftpy/parser/parser.py">
@@ -205,23 +201,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UNW01_exp.py">
+    <entry file="file://$PROJECT_DIR$/generate_trials.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="554">
-          <caret line="176" column="46" lean-forward="true" selection-start-line="176" selection-start-column="46" selection-end-line="176" selection-end-column="46" />
+        <state relative-caret-position="204">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
           <folding>
-            <element signature="e#0#51#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generate_trials.py">
+    <entry file="file://$PROJECT_DIR$/UNW01_exp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="7" column="13" selection-start-line="7" selection-end-line="7" selection-end-column="13" />
         </state>
       </provider>
     </entry>
