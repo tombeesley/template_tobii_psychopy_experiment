@@ -8,11 +8,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/UNW01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UNW01.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/ 22_09_16_1439_s999.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/ 22_09_16_1441_s999.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/ 22_09_16_1443_s999.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/ 22_09_16_1445_s999.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/ UNW01_22_09_21_1212_s353.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/ UNW01_22_09_21_1359_s217.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/UNW01_exp.py" beforeDir="false" afterPath="$PROJECT_DIR$/UNW01_exp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_trials.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +75,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "last_opened_file_path": "C:/Repos/Research/UNW01"
+    "last_opened_file_path": "C:/Repos/Research/UNW01",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="PyConsoleOptionsProvider">

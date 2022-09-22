@@ -7,7 +7,6 @@ import os
 import datetime
 import random
 import tobii_research as tr
-from pathlib import Path
 
 random.seed() # use clock for random seed
 
@@ -36,6 +35,7 @@ if setupGUI.OK:  # or if ok_data is not None
     subNum = int(setup_data[0])
     print(type(subNum))
     dataFile = "DATA\ " + exp_code + "_" + start_time + "_s" + f"{subNum:03}" + ".csv" # create csv data file
+    eye_dataFile = "DATA\ " + exp_code + "_" + start_time + "_s" + f"{subNum:03}" + "_eye.csv"  # create csv data file
 else:
     print('Setup cancelled')
     core.quit()
@@ -69,7 +69,7 @@ if runET == 1:
 #        print("Left eye: ({gaze_left_eye}) \t Right eye: ({gaze_right_eye})".format(
 #            gaze_left_eye=gaze_data['left_gaze_point_on_display_area'],
 #            gaze_right_eye=gaze_data['right_gaze_point_on_display_area']))
-        with open('csvfile.csv', 'a', newline = '') as f:  # You will need 'wb' mode in Python 2.x
+        with open(eye_dataFile, 'a', newline = '') as f:  # You will need 'wb' mode in Python 2.x
 
             global writeHeader, trial, t_phase, TS
 
@@ -116,7 +116,7 @@ trialSeq = stg1
 # read in image files and create image array for cues
 cue_files_list = glob.glob('img_files\Cue_*.jpg')
 imgArray = [visual.ImageStim(win, img, size = 300) for img in cue_files_list] # create array of images
-imgArray.insert(0,[]) # blank element to ensure images start at index 1
+imgArray.insert(0, []) # blank element to ensure images start at index 1
 
 # read in instruction slides
 instr_files_list = glob.glob('instruction_files\Slide*.PNG')
@@ -140,17 +140,17 @@ for trial in trialSeq[0:4,]:
     # "trial" is the row from trialSeq, containing info on cues/outcomes etc
 
     cue1 = imgArray[trial[0]]
-    cue1.pos = [-300,0]
+    cue1.pos = [-300, 0]
     cue1.draw()
     cue2 = imgArray[trial[1]]
-    cue2.pos = [300,0]
+    cue2.pos = [300, 0]
     cue2.draw()
 
     # stimulus on
     TS = win.flip()
-    t_phase = 1 # start of the "stimulus on" phase
+    t_phase = 1  # start of the "stimulus on" phase
 
-    keys = event.waitKeys(keyList=["up", "down"], timeStamped=TS, maxWait=timeout_time) # wait for response
+    keys = event.waitKeys(keyList=["up", "down"], timeStamped=TS, maxWait=timeout_time)  # wait for response
     print(keys)
 
     acc = 0 # default
@@ -179,19 +179,19 @@ for trial in trialSeq[0:4,]:
         textFeedback.text = feedback
         textFeedback.draw()
         TS = win.flip()
-        t_phase = 2 # feedback on phase
+        t_phase = 2  # feedback on phase
         core.wait(.5)
 
     # ITI
     TS = win.flip()
-    t_phase = 3 # feedback off, start of ITI phase
+    t_phase = 3  # feedback off, start of ITI phase
     core.wait(1)
 
     # write details to csv
     trial_data = np.append(trial, [acc, RT])
-    trial_data = np.array2string(trial_data)
+    trial_data = trial_data.astype(str)
     print(trial_data)
-    trial_data = np.insert(trial_data, 0, [exp_code, str(subNum), str(start_time)])
+    trial_data = np.insert(trial_data, 0, [exp_code, str(subNum)])
 
     with open(dataFile, 'a', newline='') as f:
         wr = csv.writer(f)
