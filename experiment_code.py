@@ -109,7 +109,7 @@ def genTrialSeq(design_filename, blocks):
 
     return stg_trials
 
-stg1 = genTrialSeq(os.path.join(script_dir, "input_files/UNW01_stg1_certain.csv"), 2)
+stg1 = genTrialSeq(os.path.join(script_dir, "input_files/design.csv"), 2)
 
 trialSeq = stg1
 
